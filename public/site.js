@@ -1,9 +1,7 @@
 (function(){
 'use strict';
-var $=function(s,r){return (r||document).querySelector(s);};
-var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));};
+var $=function(s){return document.querySelector(s);};
 var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 /* ---------- icons ---------- */
 var G={
  phone:'<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>',
@@ -51,92 +49,31 @@ function recents(){var h='<div class="scr">'+st();
  return h+'<div class="clear">clear all</div></div>';}
 var ROLE={home:function(){return home();},drawer:drawer,shade:shade,recents:recents};
 
-/* ---------- hero: the blank frame ---------- */
-var frame=$('#frame'),screen=$('#screen'),flabel=$('#frame-label');
-function setRole(r){
- $$('.role-menu button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.role===r));});
- if(!r){frame.classList.remove('has');screen.innerHTML='';flabel.textContent='frame 1 · no role';return;}
- frame.classList.add('has');flabel.textContent='frame 1 · role: '+r;
- screen.style.opacity='0';screen.innerHTML=ROLE[r]();
- requestAnimationFrame(function(){screen.style.transition=reduce?'none':'opacity .35s';screen.style.opacity='1';});
-}
-$$('.role-menu button').forEach(function(b){b.addEventListener('click',function(){setRole(b.dataset.role);autoStop=true;});});
-/* the signature move: the frame cycles through roles until the visitor touches it */
-var autoStop=false,order=['home','shade','drawer','recents',''],oi=0;
-function cycle(){if(autoStop||document.hidden){setTimeout(cycle,1200);return;}setRole(order[oi%order.length]);oi++;setTimeout(cycle,oi%5===0?2200:3600);}
-if(!reduce)setTimeout(cycle,900);else setRole('home');
 
-/* ---------- split: text → phone ---------- */
-var kdl=$('#kdl'),out=$('#screen-out');
-function renderKdl(){var t=kdl.value;var acc=(t.match(/accent\s+"(#[0-9a-fA-F]{6})"/)||[])[1]||'#D9865F';var cols=parseInt((t.match(/columns\s*=\s*(\d)/)||[])[1]||'4',10);cols=Math.min(6,Math.max(3,cols));
- out.innerHTML=home({acc:acc,cols:cols,dot:acc});}
-kdl.addEventListener('input',renderKdl);renderKdl();
+/* the frame cycles through screens */
+var frame=$('#frame'),screen=$('#screen');
+var seq=[function(){return home({acc:'#F2F2F2'});},paper,shade,term,drawer,function(){return home({acc:'#7FE0C2',cols:5,dot:'#7FE0C2'});},recents];
+var i=0;
+function show(k){screen.style.opacity='0';setTimeout(function(){screen.innerHTML=seq[k%seq.length]();frame.classList.add('has');screen.style.opacity='1';},reduce?0:260);}
+screen.style.transition=reduce?'none':'opacity .26s';
+if(reduce){show(0);}else{setTimeout(function(){show(0);},1400);setInterval(function(){i++;if(document.hidden)return;if(i%seq.length===0){frame.classList.remove('has');screen.style.opacity='0';setTimeout(function(){show(i);},900);}else show(i);},3400);}
 
-/* ---------- strip cards ---------- */
-$('#card-built').innerHTML='<div style="width:300px;height:620px;transform:scale(.72);transform-origin:0 0;position:absolute;left:0;top:0">'+home({acc:'#D9865F'})+'</div>';
-$('#card-ship').innerHTML=$('#card-built').innerHTML;
+/* headline decode */
+(function(){var el=$('#h1t'),fin=el.textContent,pool='#%&*+=-:/<>[]{}\u00b7',f=0,T=34;if(reduce)return;el.textContent='';
+ var iv=setInterval(function(){f++;var n=Math.floor(fin.length*f/T),o='';for(var k=0;k<fin.length;k++){var ch=fin[k];o+=(k<n||ch===' '||ch==='.')?ch:pool[Math.floor(Math.random()*pool.length)];}el.textContent=o;if(f>=T){clearInterval(iv);el.textContent=fin;}},30);})();
 
-/* ---------- features ---------- */
-var shellOut=$('#shell-out');
-$$('#m-shade .tile').forEach(function(t){t.addEventListener('click',function(){var on=t.classList.toggle('on');t.querySelector('small').textContent=on?'on':'off';var cmd=t.dataset.cmd.replace(/enable|on$/,on?'$&':function(m){return m==='enable'?'disable':'off';});typeShell(cmd);});});
-var typing=null;
-function typeShell(cmd){if(typing)clearInterval(typing);var i=0;shellOut.textContent='';typing=setInterval(function(){i++;shellOut.textContent=cmd.slice(0,i)+(i<cmd.length?'▌':' ✓');if(i>=cmd.length)clearInterval(typing);},reduce?0:18);}
-$('#recents').innerHTML=[['paper',paper(),16],['term',term(),120],['warm',home({acc:'#F2F2F2'}),224]].map(function(c){return '<div class="rcl" style="left:'+(c[2]+4)+'px">'+c[0]+'</div><div class="rc" style="left:'+c[2]+'px"><div style="width:300px;height:620px;transform:scale(.3067);transform-origin:0 0;position:absolute">'+c[1]+'</div></div>';}).join('');
-$$('.perm-actions button').forEach(function(b){b.addEventListener('click',function(){var p=b.closest('.perm');p.innerHTML='<div class="perm-title">'+(b.classList.contains('primary')?'<span class="ok"></span> paper-grid can read notifications and toggle settings.':'paper-grid installed without scripts. Layout only.')+'</div>';});});
-
-/* ---------- faq ---------- */
-var A=[
- 'Yes. Shizuku gives the app shell-level access without root, which is what makes the toggles, recents and the glass over other apps work. It takes two minutes to set up and the app walks you through it.',
- 'No. Nothing here needs root, and nothing here needs a custom ROM. It is a launcher with overlays and a shell, and it tells you exactly which commands it runs.',
- 'Android 12 and up. It is being built on a Galaxy S24 and a Redmi Note 10 Pro, with Pixel and other vendors to follow. Foldables come later; tablets sooner.',
- 'The app and the engine are free. Layouts in the store are priced by the people who make them; many will be free. Seventy percent of a paid layout goes to its creator.',
- 'Yes. A layout is a text file. You can write one by hand, keep it in git, fork someone else’s. The desktop editor comes later and draws the same file.',
- 'Because that is the first thing people say. Launchers are settings screens; this is a blank frame that becomes whatever you build. The name is the positioning, and it is in quotes because someone said it.',
- 'There is no date. What exists now is the current launcher, the brand, and the plan for the engine. The next thing to ship is the engine and the file format. This page will say when there is something to install.'
-];
-var pane=$('#faq-answer'),qs=$$('.q'),cur=-1;
-function selectQ(i,fromKey){if(i===cur&&!fromKey)return;cur=i;qs.forEach(function(q,k){q.setAttribute('aria-expanded',String(k===i));var a=$('#a'+k);a.classList.toggle('open',k===i);a.textContent=k===i?A[k]:'';});
- pane.classList.add('fade');setTimeout(function(){pane.textContent=A[i];pane.classList.remove('fade');},reduce?0:150);}
-qs.forEach(function(q,i){q.addEventListener('mouseenter',function(){if(matchMedia('(min-width:821px)').matches)selectQ(i);});q.addEventListener('focus',function(){selectQ(i);});q.addEventListener('click',function(){selectQ(i,true);});});
-selectQ(0);
-
-/* ---------- cta: mailto with the answers ---------- */
-$('#tell-form').addEventListener('submit',function(e){e.preventDefault();var f=e.target;var who=f.who.value==='creator'?'I would make layouts':'I would install them';
- var body='What I would build first: '+(f.first.value||'')+'\n'+who+'\nWhat would stop me: '+(f.deal.value||'')+'\n';
- location.href='mailto:matheeshasilva1234@gmail.com?subject='+encodeURIComponent('"Not a Launcher" feedback')+'&body='+encodeURIComponent(body);});
-
-/* ---------- decode the headline ---------- */
-(function(){var el=$('#h1t'),fin=el.textContent,pool='#%&*+=-:/<>[]{}\u00b7',f=0,T=34;if(reduce)return;
- var iv=setInterval(function(){f++;var n=Math.floor(fin.length*f/T),o='';for(var i=0;i<fin.length;i++){var ch=fin[i];o+=(i<n||ch===' '||ch==='.')?ch:pool[Math.floor(Math.random()*pool.length)];}el.textContent=o;if(f>=T){clearInterval(iv);el.textContent=fin;}},30);})();
-
-/* ---------- the mascot: nav mark + ascii band ---------- */
+/* Tess: the mark blinks; the ascii field ripples */
 (function(){
- var OPEN='M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z',SHUT='M18 27h7a2 2 0 0 1 0 4h-7a2 2 0 0 1 0-4z',HAPPY='M16 38c0-10 3-16 5.5-16S27 28 27 38z';
- var n1=$('#ne1'),n2=$('#ne2'),b1=$('#be1'),b2=$('#be2'),beyes=$('#band-eyes'),bar=$('#band-bar'),field=$('#band-field'),status=$('#band-status');
- var t0=performance.now(),blinkAt=1.4,blink=-1,lookAt=0,dx=0,msgAt=0,mi=0,happyAt=-9;
- var msgs=['building','laying tiles','compiling layouts','checking contrast','polishing the glass','wiring the shell'];
- var W=46,H=13;
+ var OPEN='M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z',SHUT='M18 27h7a2 2 0 0 1 0 4h-7a2 2 0 0 1 0-4z';
+ var e1=$('#e1'),e2=$('#e2'),eyes=$('#eyes'),field=$('#field'),status=$('#status');
+ var t0=performance.now(),blinkAt=1.6,blink=-1,lookAt=0,dx=0,msgAt=0,mi=0;
+ var msgs=['building','laying tiles','compiling layouts','polishing the glass','wiring the shell','checking contrast'];
+ var W=Math.min(70,Math.floor(innerWidth/16)),H=Math.max(9,Math.min(16,Math.floor(innerHeight/48)));
  function frame(now){var t=reduce?1:(now-t0)/1000;
-  if(!reduce){if(t>blinkAt){blink=t;blinkAt=t+2+Math.random()*2.6;}if(t>lookAt){dx=[0,-3,3,0][Math.floor(Math.random()*4)];lookAt=t+1.5+Math.random()*4;}
-   if(t>msgAt){mi++;status.textContent=msgs[mi%msgs.length];msgAt=t+3.2;if(mi%msgs.length===0)happyAt=t;}}
-  var happy=t-happyAt<1.1,shut=blink>=0&&t-blink<0.11;var d=happy?HAPPY:(shut?SHUT:OPEN);
-  [b1,b2].forEach(function(e){e.setAttribute('d',d);});b2.setAttribute('transform','translate(21 0)');beyes.setAttribute('transform','translate('+(happy?0:dx)+' 0)');
-  n1.setAttribute('d',shut?SHUT:OPEN);n2.setAttribute('d',shut?SHUT:OPEN);
-  bar.setAttribute('width',String(32*((t*0.11+mi*0.37)%1)));
-  var out='';for(var y=0;y<H;y++){var row='';for(var x=0;x<W;x++){var r=Math.sin(x*0.45+y*0.8-t*1.2);var cx=Math.abs(x-(W-1)/2),cy=Math.abs(y-(H-1)/2);row+=(cx<6&&cy<3.2)?' ':(r>0.6?'\u2022':'\u00b7');}out+=row+'\n';}
-  field.textContent=out;if(!reduce)requestAnimationFrame(frame);}
+  if(!reduce){if(t>blinkAt){blink=t;blinkAt=t+2+Math.random()*2.6;}if(t>lookAt){dx=[0,-3,3,0][Math.floor(Math.random()*4)];lookAt=t+1.5+Math.random()*4;}if(t>msgAt){status.textContent=msgs[mi%msgs.length];mi++;msgAt=t+3.4;}}
+  var shut=blink>=0&&t-blink<0.11;e1.setAttribute('d',shut?SHUT:OPEN);e2.setAttribute('d',shut?SHUT:OPEN);e2.setAttribute('transform','translate(21 0)');eyes.setAttribute('transform','translate('+dx+' 0)');
+  var out='';for(var y=0;y<H;y++){var row='';for(var x=0;x<W;x++){var r=Math.sin(x*0.42+y*0.75-t*1.1)+0.5*Math.sin(x*0.13-t*0.7);var hx=innerWidth>820?W*0.79:W*0.5,cx=Math.abs(x-hx),cy=Math.abs(y-(H-1)/2);row+=(cx<W*0.14&&cy<H*0.48)?' ':(r>0.95?'<b>\u2022</b>':(r>0.15?'\u00b7':' '));}out+=row+'\n';}
+  field.innerHTML=out;if(!reduce)requestAnimationFrame(frame);}
  requestAnimationFrame(frame);
 })();
-
-/* ---------- footer clock ---------- */
-function tick(){try{$('#clock').textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Colombo'}).format(new Date());}catch(e){}}
-tick();setInterval(tick,30000);
-
-/* ---------- entrances ---------- */
-var targets=$$('.hero-col > *, .split-in > *, .split-out, .field > *, .features h2, .module > *, .faq h2, .q, .faq-pane, .cta-text > *, .dialog, .tile');
-targets.forEach(function(el,i){el.classList.add('rise');});
-if('IntersectionObserver' in window&&!reduce){
- var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){var sib=$$('.rise',e.target.parentElement).indexOf(e.target);e.target.style.transitionDelay=(Math.max(0,sib)*70)+'ms';e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15});
- targets.forEach(function(el){io.observe(el);});
-}else{targets.forEach(function(el){el.classList.add('in');});}
 })();

@@ -9,4 +9,4 @@ Static coming-soon page. No build step: `public/` is deployed as-is.
 3. Site is live at `<project>.vercel.app`. Add `notalauncher.app` under Settings → Domains when you own it.
 
 ## Edit
-Everything is in `public/index.html`. The mascot (Tess — the logo's four tiles with a face in the white one) is the script at the bottom: `TILES` places the tiles, `msgs` is the rotating status line, and blink/glance/hop timings are the first few lines of `frame()`. Fonts are self-hosted in `public/fonts/` (IBM Plex Sans, JetBrains Mono — both OFL).
+Everything is in `public/index.html`. One screen: the mark (it blinks), the headline decoding in, a phone frame on the dot field cycling through layouts, and a rotating build-log line. `site.js` holds the layout renderers (`home`, `paper`, `term`, `shade`, `drawer`, `recents`) and the `seq` array that decides the cycle.

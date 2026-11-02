@@ -3,270 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>"Not a Launcher" — a canvas your phone runs</title>
-<meta name="description" content="A blank frame becomes your home screen, drawer, shade or recents. Layouts are text files. Creators sell them. Android, no root. In development.">
+<title>"Not a Launcher"</title>
+<meta name="description" content="A canvas your phone runs. Android, no root. In development.">
 <meta property="og:title" content="&quot;Not a Launcher&quot;">
 <meta property="og:description" content="A canvas your phone runs. In development.">
 <meta name="theme-color" content="#0A0A0A">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/ibm-plex-sans-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/jetbrains-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
-
 <header class="nav">
-  <a class="brand" href="/" aria-label="Not a Launcher, home">
-    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-4 -4) scale(1.125)"><path id="ne1" d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z"/><path d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z" transform="translate(21 0)" id="ne2"/></g></svg>
+  <a class="brand" href="/" aria-label="Not a Launcher">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-4 -4) scale(1.125)"><g id="eyes"><path id="e1" d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z"/><path id="e2" d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z" transform="translate(21 0)"/></g></g></svg>
     <span class="wordmark"><b>"</b>Not a Launcher<b>"</b></span>
   </a>
-  <nav aria-label="Sections">
-    <a href="#how">How it works</a>
-    <a href="#real">What is real</a>
-    <a href="#questions">Questions</a>
-  </nav>
-  <a class="btn" href="#tell">Tell us what you think</a>
+  <div class="tag"><span>android · no root · </span><b>in development</b></div>
 </header>
 
 <main>
-
-<section class="hero" aria-labelledby="h1">
-  <div class="hero-col">
-    <h1 id="h1"><span id="h1t">A canvas your phone runs.</span><span class="cur" aria-hidden="true"></span></h1>
-    <p class="lead">Launchers are settings screens. This is a blank frame. Give it a job and it becomes your home screen, your app drawer, your notification shade or your recents, with the real function behind it. Android, no root. In development.</p>
-    <div class="actions">
-      <a class="btn" href="#tell">Tell us what you think</a>
-      <a class="textlink" href="#how">See how it works <span aria-hidden="true">→</span></a>
-    </div>
+  <pre id="field" aria-hidden="true"></pre>
+  <div class="copy">
+    <h1><span id="h1t">A canvas your phone runs.</span><span class="cur" aria-hidden="true"></span></h1>
+    <p class="lead">Not a launcher. A blank frame, and whatever you make of it.</p>
+    <p class="status"><span id="status">building</span><span class="c" aria-hidden="true"></span></p>
   </div>
-
-  <div class="stage" data-ui id="stage">
-    <div class="canvas-dots" aria-hidden="true"></div>
-    <div class="frame" id="frame">
-      <div class="frame-label" id="frame-label">frame 1 · no role</div>
-      <div class="screen" id="screen" aria-live="polite"></div>
-    </div>
-    <div class="role-menu" role="group" aria-label="Give the frame a role">
-      <div class="role-title">role</div>
-      <button type="button" data-role="home" aria-pressed="false">home</button>
-      <button type="button" data-role="drawer" aria-pressed="false">drawer</button>
-      <button type="button" data-role="shade" aria-pressed="false">shade</button>
-      <button type="button" data-role="recents" aria-pressed="false">recents</button>
-      <button type="button" data-role="" class="clear" aria-pressed="true">none</button>
-    </div>
+  <div class="stage" data-ui aria-label="A phone frame cycling through layouts">
+    <div class="frame" id="frame"><div class="screen" id="screen"></div></div>
   </div>
-</section>
-
-<section class="split" id="text" aria-labelledby="h-split">
-  <div class="split-in">
-    <label for="kdl" class="split-cap">A layout is a text file. Edit it.</label>
-    <textarea id="kdl" class="kdl" spellcheck="false" rows="12">layout "warm-grid" engine="1.0" {
-  theme {
-    accent  "#D9865F"
-    surface "#121212"
-  }
-  surface role="home" {
-    clock  style="mono"
-    grid   columns=4 rows=4
-    dock   items=4
-  }
-}</textarea>
-    <p class="split-hint">Try <span class="kw">accent "#7FE0C2"</span> or <span class="kw">columns=5</span>.</p>
-  </div>
-  <div class="split-out">
-    <div class="phone phone-out" data-ui><div class="screen" id="screen-out"></div></div>
-  </div>
-  <h2 id="h-split" class="split-h"><span class="split-a">Written.</span><span class="split-b">Running.</span></h2>
-</section>
-
-<section class="strip" id="how" aria-labelledby="h-how">
-  <div class="field f1">
-    <h2 id="h-how">How it works</h2>
-    <div class="card" data-ui>
-      <div class="card-top"><span class="card-name">frame 1</span><span class="card-meta">no role</span></div>
-      <div class="card-screen empty"><span>empty</span></div>
-      <div class="card-foot">640 × 1340</div>
-    </div>
-    <p class="clause">First a frame, with nothing in it.</p>
-  </div>
-  <div class="field f2">
-    <div class="card" data-ui>
-      <div class="card-top"><span class="card-name">frame 1</span><span class="card-meta sig">role: home</span></div>
-      <div class="card-screen role"><span>home</span><small>app list · wallpaper · home press</small></div>
-      <div class="card-foot">bound to 3 sources</div>
-    </div>
-    <p class="clause">Then a job, which brings its data and gestures.</p>
-  </div>
-  <div class="field f3">
-    <div class="card" data-ui>
-      <div class="card-top"><span class="card-name">warm-grid</span><span class="card-meta">home</span></div>
-      <div class="card-screen built" id="card-built"></div>
-      <div class="card-foot">12 components · 3 states</div>
-    </div>
-    <p class="clause">Then the build: components, states, animations.</p>
-  </div>
-  <div class="field f4">
-    <div class="card" data-ui>
-      <div class="card-top"><span class="card-name">warm-grid</span><span class="card-meta">published</span></div>
-      <div class="card-screen built" id="card-ship"></div>
-      <div class="card-foot"><span>by you</span><span class="price">$3</span></div>
-    </div>
-    <p class="clause">Then it ships, on your phone or in the store.</p>
-  </div>
-</section>
-
-<section class="band" aria-label="In development">
-  <pre id="band-field" aria-hidden="true"></pre>
-  <svg viewBox="0 0 64 64" aria-hidden="true"><g id="band-eyes"><path id="be1" fill="#F2F2F2"/><path id="be2" fill="#F2F2F2"/></g><rect x="16" y="47" width="32" height="3" rx="1.5" fill="#2A2A2A"/><rect id="band-bar" x="16" y="47" width="0" height="3" rx="1.5" fill="#D9865F"/></svg>
-  <p class="status"><span id="band-status">building</span><span class="c" aria-hidden="true"></span></p>
-</section>
-
-<section class="features" id="real" aria-labelledby="h-real">
-  <h2 id="h-real">What is real</h2>
-
-  <article class="module">
-    <div class="panel" data-ui id="m-shade">
-      <div class="tiles">
-        <button type="button" class="tile" data-cmd="svc wifi enable"><span>wifi</span><small>off</small></button>
-        <button type="button" class="tile" data-cmd="svc bluetooth enable"><span>bluetooth</span><small>off</small></button>
-        <button type="button" class="tile" data-cmd="cmd notification set_dnd on"><span>dnd</span><small>off</small></button>
-      </div>
-      <div class="shell"><span class="prompt">$</span> <span id="shell-out">tap a tile</span></div>
-    </div>
-    <div class="module-text">
-      <h3>The toggles are real.</h3>
-      <p>A tile in your shade runs the same shell command the system would. Wifi, bluetooth, data, torch, do not disturb, rotation, battery saver, airplane mode.</p>
-      <p>That is what Shizuku is for. The app tells you exactly which commands it runs and why.</p>
-    </div>
-  </article>
-
-  <article class="module">
-    <div class="panel" data-ui>
-      <div class="recents" id="recents"></div>
-    </div>
-    <div class="module-text">
-      <h3>Recents are real.</h3>
-      <p>Your recents view gets the live task list and real thumbnails, so a layout can show them as cards, a stack, a row, or anything else you draw.</p>
-    </div>
-  </article>
-
-  <article class="module">
-    <div class="panel" data-ui>
-      <div class="tokens">
-        <div class="tok"><span class="sw" style="background:#D9865F"></span><span>accent</span><code>#D9865F</code></div>
-        <div class="tok"><span class="sw" style="background:#121212"></span><span>surface</span><code>#121212</code></div>
-        <div class="tok"><span class="sw" style="background:#F2F2F2"></span><span>ink</span><code>#F2F2F2</code></div>
-        <div class="tok"><span class="sw sw-r"></span><span>radius</span><code>8dp</code></div>
-        <div class="tok sel"><span class="sw sw-g"></span><span>glass</span><code>live</code></div>
-      </div>
-    </div>
-    <div class="module-text">
-      <h3>Themes are tokens.</h3>
-      <p>Colours, type, shapes, motion and the glass material are one file that applies to any layout. Fonts come from Google Fonts by name.</p>
-      <p>Glass is one word in the theme. The engine picks the best implementation your phone can do.</p>
-    </div>
-  </article>
-
-  <article class="module">
-    <div class="panel" data-ui>
-      <div class="perm">
-        <div class="perm-title"><b>paper-grid</b> wants to</div>
-        <ul>
-          <li><span class="ok"></span> read notifications</li>
-          <li><span class="ok"></span> toggle system settings</li>
-          <li><span class="no"></span> run shell commands</li>
-        </ul>
-        <div class="perm-actions"><button type="button" class="ghost">Deny</button><button type="button" class="primary">Allow</button></div>
-      </div>
-    </div>
-    <div class="module-text">
-      <h3>Scripts are sandboxed.</h3>
-      <p>A layout with no script is pure data and needs no trust. A plugin declares what it needs and you approve it. Nothing from the store ever gets a shell.</p>
-    </div>
-  </article>
-
-  <article class="module">
-    <div class="panel" data-ui>
-      <div class="ledger">
-        <div class="row"><span>paper-grid</span><span>$3.00</span></div>
-        <div class="row dim"><span>google 15%</span><span>−$0.45</span></div>
-        <div class="row dim"><span>platform 15%</span><span>−$0.45</span></div>
-        <div class="row total"><span>you, 70%</span><span>$2.10</span></div>
-        <div class="row status"><span>pending</span><span>clears 16 nov</span></div>
-      </div>
-    </div>
-    <div class="module-text">
-      <h3>Creators get paid.</h3>
-      <p>Set a price or give it away. Google Play handles the purchase. Seventy percent of every sale goes to the person who made the layout, paid out weekly.</p>
-      <p>The rate is published once and not touched.</p>
-    </div>
-  </article>
-
-  <article class="module">
-    <div class="panel panel-notlist" data-ui>
-      <ul class="notlist">
-        <li>status bar</li><li>lock screen</li><li>always-on display</li><li>navigation bar</li><li>keyboard</li><li>other apps</li>
-      </ul>
-    </div>
-    <div class="module-text">
-      <h3>What stays with Android.</h3>
-      <p>This is a launcher, overlays and system control through a shell, not a custom ROM. These six things stay as the system draws them.</p>
-    </div>
-  </article>
-</section>
-
-<section class="faq" id="questions" aria-labelledby="h-faq">
-  <div class="faq-list" role="list">
-    <h2 id="h-faq">Questions</h2>
-    <button type="button" class="q" data-q="0" aria-expanded="true">Do I need Shizuku?</button>
-    <div class="a-inline" id="a0"></div>
-    <button type="button" class="q" data-q="1" aria-expanded="false">Does it need root?</button>
-    <div class="a-inline" id="a1"></div>
-    <button type="button" class="q" data-q="2" aria-expanded="false">Which phones?</button>
-    <div class="a-inline" id="a2"></div>
-    <button type="button" class="q" data-q="3" aria-expanded="false">Is it free?</button>
-    <div class="a-inline" id="a3"></div>
-    <button type="button" class="q" data-q="4" aria-expanded="false">Can I write a layout without the editor?</button>
-    <div class="a-inline" id="a4"></div>
-    <button type="button" class="q" data-q="5" aria-expanded="false">Why is it called that?</button>
-    <div class="a-inline" id="a5"></div>
-    <button type="button" class="q" data-q="6" aria-expanded="false">When?</button>
-    <div class="a-inline" id="a6"></div>
-  </div>
-  <div class="faq-pane"><p id="faq-answer"></p></div>
-</section>
-
-<section class="cta" id="tell" aria-labelledby="h-cta">
-  <div class="cta-text">
-    <h2 id="h-cta">Tell us what you think.</h2>
-    <p>It opens your mail app with your answers filled in. We read every one.</p>
-  </div>
-  <form class="dialog" data-ui id="tell-form" action="mailto:matheeshasilva1234@gmail.com" method="get">
-    <div class="dialog-title">Feedback</div>
-    <label for="first">What would you build first?</label>
-    <input id="first" name="first" type="text" placeholder="a shade that looks like a terminal" autocomplete="off">
-    <div class="seg" role="radiogroup" aria-label="You are">
-      <label><input type="radio" name="who" value="creator" checked><span>I would make layouts</span></label>
-      <label><input type="radio" name="who" value="user"><span>I would install them</span></label>
-    </div>
-    <label for="deal">What would stop you?</label>
-    <input id="deal" name="deal" type="text" placeholder="installing Shizuku" autocomplete="off">
-    <button type="submit" class="primary">Send</button>
-  </form>
-</section>
-
 </main>
 
-<footer class="tiles">
-  <div class="tile t-state"><p>A canvas your phone runs. Android, no root, in development.</p><small>© 2026 Not a Launcher</small></div>
-  <div class="tile t-nav"><a href="#how">How it works</a><a href="#real">What is real</a><a href="#questions">Questions</a><a href="#tell">Feedback</a></div>
-  <div class="tile t-time"><span>Colombo</span><span id="clock">--:--</span></div>
-  <div class="tile t-mail"><a href="mailto:matheeshasilva1234@gmail.com">hello</a></div>
-  <div class="tile t-word"><span><b>"</b>Not a Launcher<b>"</b></span></div>
-  <a class="tile t-go" href="#tell"><span>Say what you'd build</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+<footer class="foot">
+  <span>© 2026 Not a Launcher</span>
+  <span>not yet released</span>
 </footer>
-
 <script src="site.js" defer></script>
 </body>
 </html>
