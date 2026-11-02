@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not a Launcher</title>
+<meta name="description" content="A canvas your phone runs. Home, drawer, shade and recents — designed by people, running on Android. In development.">
+<meta property="og:title" content="Not a Launcher">
+<meta property="og:description" content="A canvas your phone runs. In development.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0A0A0A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/jetbrains-mono-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
+@font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format('woff2');font-weight:600;font-display:swap}
+@font-face{font-family:'Mono';src:url(fonts/jetbrains-mono-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'Mono';src:url(fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
+:root{--bg:#0A0A0A;--s1:#121212;--s2:#1F1F1F;--line:#2A2A2A;--ink:#F2F2F2;--mute:#8A8A8A;--dim:#5A5A5A;--sig:#D9865F}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:'Plex',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column;background-image:linear-gradient(#141414 1px,transparent 1px),linear-gradient(90deg,#141414 1px,transparent 1px);background-size:48px 48px}
+.mono{font-family:'Mono',ui-monospace,monospace}
+a{color:var(--ink)}
+header{padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);background:rgba(10,10,10,.6);backdrop-filter:blur(12px)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark{position:relative;width:26px;height:26px;flex:none}
+.mark i{position:absolute;width:11px;height:11px;border-radius:2px;display:block}
+.brand span{font-family:'Mono';font-size:17px;font-weight:500;letter-spacing:-0.01em}
+.tag{font-family:'Mono';font-size:12px;color:var(--mute)}
+.tag b{color:var(--sig);font-weight:400}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;max-width:960px;width:100%;margin:0 auto;padding:72px 24px 48px}
+.k{font-family:'Mono';font-size:13px;color:var(--mute);margin:0 0 22px}
+h1{margin:0;font-size:clamp(44px,8.5vw,92px);line-height:1;font-weight:600;letter-spacing:-0.035em;max-width:14ch;min-height:2em}
+h1 .c{display:inline-block;width:.42em;height:.9em;background:var(--sig);vertical-align:-0.08em;margin-left:.06em;animation:bl 1s steps(1) infinite}
+@keyframes bl{50%{opacity:0}}
+.lead{margin:28px 0 0;font-size:clamp(17px,2.2vw,21px);line-height:1.55;color:#C4C4C4;max-width:52ch}
+.lead b{color:var(--ink);font-weight:500}
+form{margin-top:40px;display:flex;gap:10px;max-width:520px}
+input{flex:1;min-width:0;height:52px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--s1);color:var(--ink);font:inherit;font-size:16px;outline:none}
+input::placeholder{color:var(--dim)}
+input:focus{border-color:var(--ink)}
+button{height:52px;padding:0 20px;border-radius:8px;border:0;background:var(--ink);color:var(--bg);font:inherit;font-size:15px;font-weight:600;cursor:pointer;white-space:nowrap}
+button:hover{background:#fff}
+button:disabled{opacity:.6;cursor:default}
+.note{margin:12px 0 0;font-family:'Mono';font-size:12px;color:var(--mute)}
+.note.ok{color:var(--sig)}
+.facts{margin:64px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.facts li{border:1px solid var(--line);background:var(--s1);border-radius:8px;padding:18px}
+.facts .h{font-size:16px;font-weight:600;margin:0 0 6px}
+.facts p{margin:0;font-size:14px;line-height:1.55;color:var(--mute)}
+footer{padding:22px 24px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'Mono';font-size:12px;color:var(--mute)}
+footer a{color:var(--mute);text-decoration:none}
+footer a:hover{color:var(--ink)}
+@media (max-width:560px){form{flex-direction:column}button{width:100%}header{padding:16px 20px}main{padding:48px 20px 40px}.tag span:first-child{display:none}}
+@media (prefers-reduced-motion:reduce){h1 .c{animation:none}}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="/" aria-label="Not a Launcher">
+    <span class="mark" aria-hidden="true"><i style="left:0;top:0;background:#D9865F"></i><i style="left:14px;top:3px;background:#2A2A2A"></i><i style="left:3px;top:14px;background:#2A2A2A"></i><i style="left:15px;top:15px;background:#F2F2F2"></i></span>
+    <span>Not a Launcher</span>
+  </a>
+  <div class="tag"><span>android · shizuku · no root · </span><b>in development</b></div>
+</header>
+
+<main>
+  <p class="k">&gt; a canvas your phone runs</p>
+  <h1 id="h"><span id="ht"></span><span class="c" aria-hidden="true"></span></h1>
+  <p class="lead">Launchers are settings screens. This is a blank canvas. Add a frame, give it a job — home, drawer, shade, recents — and build it. <b>What you draw ships with real function.</b> Layouts are text files. Creators publish to a store and keep most of every sale.</p>
+
+  <form id="f" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <label for="e" class="sr" style="position:absolute;left:-9999px">Email</label>
+    <input id="e" name="email" type="email" required autocomplete="email" placeholder="you@domain.com">
+    <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+    <button type="submit">Tell me when it ships</button>
+  </form>
+  <p class="note" id="n">No newsletter. One email when there is something to install, and one when the editor is ready.</p>
+
+  <ul class="facts">
+    <li><p class="h">Blank frames, real roles</p><p>A frame has no identity until you give it one. The role brings its data, its gestures and its system calls.</p></li>
+    <li><p class="h">Dotfiles for your phone</p><p>Every layout is a text document. Hand-write it, version it, fork it, or draw it in the desktop editor.</p></li>
+    <li><p class="h">Made by people</p><p>Pick a layout from the store and your whole phone becomes it. Creators set the price and keep the majority.</p></li>
+  </ul>
+</main>
+
+<footer>
+  <span>© 2026 Not a Launcher · not yet released</span>
+  <span><a href="mailto:hello@notalauncher.app">hello@notalauncher.app</a></span>
+</footer>
+
+<script>
+(function(){
+  var final='Your phone, the way you’d build it.',pool='#%&*+=-:/<>[]{}·',el=document.getElementById('ht'),f=0,total=36;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=final;return;}
+  var iv=setInterval(function(){f++;var n=Math.floor(final.length*f/total),o='';
+    for(var i=0;i<final.length;i++){var c=final[i];o+=(i<n||c===' '||c===','||c==='.'||c==='’')?c:pool[Math.floor(Math.random()*pool.length)];}
+    el.textContent=o;if(f>=total){clearInterval(iv);el.textContent=final;}},32);
+})();
+(function(){
+  var form=document.getElementById('f'),note=document.getElementById('n'),btn=form.querySelector('button');
+  form.addEventListener('submit',function(ev){
+    ev.preventDefault();btn.disabled=true;btn.textContent='Sending…';
+    fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
+      .then(function(r){if(!r.ok)throw 0;form.reset();note.className='note ok';note.textContent='Got it. We’ll write when there is something to install.';btn.textContent='Added';})
+      .catch(function(){btn.disabled=false;btn.textContent='Tell me when it ships';note.className='note';note.textContent='That didn’t send. Try again, or email hello@notalauncher.app.';});
+  });
+})();
+</script>
+</body>
+</html>
