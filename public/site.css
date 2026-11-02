@@ -36,7 +36,7 @@ body{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto}
 .tag{font-family:var(--mono);font-size:13px;color:var(--mute)}
 .tag b{font-weight:400;color:var(--sig)}
 main{position:relative;display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;gap:clamp(40px,7vw,140px);padding:24px var(--m) 64px;overflow:hidden}
-#field{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-family:var(--mono);font-size:14px;line-height:2;letter-spacing:1em;color:#333;white-space:pre;user-select:none;pointer-events:none}
+#field{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;overflow:hidden;contain:strict;font-family:var(--mono);font-size:14px;line-height:2;letter-spacing:1em;color:#333;white-space:pre;user-select:none;pointer-events:none}
 #field b{font-weight:400;color:#6A6A6A}
 #field i{font-style:normal;color:var(--sig)}
 .copy{position:relative;z-index:1;max-width:620px}

@@ -20,7 +20,9 @@ var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  if(!touch){addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY;},{passive:true});addEventListener('pointerleave',function(){px=py=null;});}
  document.addEventListener('decoded',function(){wideAt=(performance.now()-t0)/1000;});
  function io(x){return x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2;}
- var W=Math.ceil(innerWidth/22)+2,H=Math.ceil(innerHeight/28)+2;
+ var W=40,H=20;
+ function measure(){var probe=document.createElement('span');probe.textContent='\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\u00b7\n\u00b7\n\u00b7\n\u00b7';field.innerHTML='';field.appendChild(probe);var r=probe.getBoundingClientRect();var cw=r.width/10,ch=r.height/4;var fr=field.getBoundingClientRect();W=Math.ceil(fr.width/cw)+2;H=Math.ceil(fr.height/ch)+2;}
+ measure();var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(measure,150);});
  function frame(now){var t=reduce?1:(now-t0)/1000;
   if(!reduce){
    if(t>blinkAt){blink=t;blinkAt=t+2.2+Math.random()*2.8;}
