@@ -18,7 +18,7 @@
 
 <header class="nav">
   <a class="brand" href="/" aria-label="Not a Launcher, home">
-    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-4 -4) scale(1.125)"><path d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z"/><path d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z" transform="translate(21 0)"/></g></svg>
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><g transform="translate(-4 -4) scale(1.125)"><path id="ne1" d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z"/><path d="M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z" transform="translate(21 0)" id="ne2"/></g></svg>
     <span class="wordmark"><b>"</b>Not a Launcher<b>"</b></span>
   </a>
   <nav aria-label="Sections">
@@ -33,7 +33,7 @@
 
 <section class="hero" aria-labelledby="h1">
   <div class="hero-col">
-    <h1 id="h1">A canvas your phone runs.</h1>
+    <h1 id="h1"><span id="h1t">A canvas your phone runs.</span><span class="cur" aria-hidden="true"></span></h1>
     <p class="lead">Launchers are settings screens. This is a blank frame. Give it a job and it becomes your home screen, your app drawer, your notification shade or your recents, with the real function behind it. Android, no root. In development.</p>
     <div class="actions">
       <a class="btn" href="#tell">Tell us what you think</a>
@@ -114,6 +114,12 @@
     </div>
     <p class="clause">Then it ships, on your phone or in the store.</p>
   </div>
+</section>
+
+<section class="band" aria-label="In development">
+  <pre id="band-field" aria-hidden="true"></pre>
+  <svg viewBox="0 0 64 64" aria-hidden="true"><g id="band-eyes"><path id="be1" fill="#F2F2F2"/><path id="be2" fill="#F2F2F2"/></g><rect x="16" y="47" width="32" height="3" rx="1.5" fill="#2A2A2A"/><rect id="band-bar" x="16" y="47" width="0" height="3" rx="1.5" fill="#D9865F"/></svg>
+  <p class="status"><span id="band-status">building</span><span class="c" aria-hidden="true"></span></p>
 </section>
 
 <section class="features" id="real" aria-labelledby="h-real">

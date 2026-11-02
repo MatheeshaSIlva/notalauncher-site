@@ -105,6 +105,29 @@ $('#tell-form').addEventListener('submit',function(e){e.preventDefault();var f=e
  var body='What I would build first: '+(f.first.value||'')+'\n'+who+'\nWhat would stop me: '+(f.deal.value||'')+'\n';
  location.href='mailto:matheeshasilva1234@gmail.com?subject='+encodeURIComponent('"Not a Launcher" feedback')+'&body='+encodeURIComponent(body);});
 
+/* ---------- decode the headline ---------- */
+(function(){var el=$('#h1t'),fin=el.textContent,pool='#%&*+=-:/<>[]{}\u00b7',f=0,T=34;if(reduce)return;
+ var iv=setInterval(function(){f++;var n=Math.floor(fin.length*f/T),o='';for(var i=0;i<fin.length;i++){var ch=fin[i];o+=(i<n||ch===' '||ch==='.')?ch:pool[Math.floor(Math.random()*pool.length)];}el.textContent=o;if(f>=T){clearInterval(iv);el.textContent=fin;}},30);})();
+
+/* ---------- the mascot: nav mark + ascii band ---------- */
+(function(){
+ var OPEN='M19 18h5a3 3 0 0 1 3 3v8l-1.6 9.2a1.7 1.7 0 0 1-1.7 1.8h-4.4a1.7 1.7 0 0 1-1.7-1.8L16 29v-8a3 3 0 0 1 3-3z',SHUT='M18 27h7a2 2 0 0 1 0 4h-7a2 2 0 0 1 0-4z',HAPPY='M16 38c0-10 3-16 5.5-16S27 28 27 38z';
+ var n1=$('#ne1'),n2=$('#ne2'),b1=$('#be1'),b2=$('#be2'),beyes=$('#band-eyes'),bar=$('#band-bar'),field=$('#band-field'),status=$('#band-status');
+ var t0=performance.now(),blinkAt=1.4,blink=-1,lookAt=0,dx=0,msgAt=0,mi=0,happyAt=-9;
+ var msgs=['building','laying tiles','compiling layouts','checking contrast','polishing the glass','wiring the shell'];
+ var W=46,H=13;
+ function frame(now){var t=reduce?1:(now-t0)/1000;
+  if(!reduce){if(t>blinkAt){blink=t;blinkAt=t+2+Math.random()*2.6;}if(t>lookAt){dx=[0,-3,3,0][Math.floor(Math.random()*4)];lookAt=t+1.5+Math.random()*4;}
+   if(t>msgAt){mi++;status.textContent=msgs[mi%msgs.length];msgAt=t+3.2;if(mi%msgs.length===0)happyAt=t;}}
+  var happy=t-happyAt<1.1,shut=blink>=0&&t-blink<0.11;var d=happy?HAPPY:(shut?SHUT:OPEN);
+  [b1,b2].forEach(function(e){e.setAttribute('d',d);});b2.setAttribute('transform','translate(21 0)');beyes.setAttribute('transform','translate('+(happy?0:dx)+' 0)');
+  n1.setAttribute('d',shut?SHUT:OPEN);n2.setAttribute('d',shut?SHUT:OPEN);
+  bar.setAttribute('width',String(32*((t*0.11+mi*0.37)%1)));
+  var out='';for(var y=0;y<H;y++){var row='';for(var x=0;x<W;x++){var r=Math.sin(x*0.45+y*0.8-t*1.2);var cx=Math.abs(x-(W-1)/2),cy=Math.abs(y-(H-1)/2);row+=(cx<6&&cy<3.2)?' ':(r>0.6?'\u2022':'\u00b7');}out+=row+'\n';}
+  field.textContent=out;if(!reduce)requestAnimationFrame(frame);}
+ requestAnimationFrame(frame);
+})();
+
 /* ---------- footer clock ---------- */
 function tick(){try{$('#clock').textContent=new Intl.DateTimeFormat('en-GB',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Colombo'}).format(new Date());}catch(e){}}
 tick();setInterval(tick,30000);
