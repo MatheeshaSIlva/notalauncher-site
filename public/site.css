@@ -1,33 +1,22 @@
 @font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
-@font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
 @font-face{font-family:'Plex';src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format('woff2');font-weight:600;font-display:swap}
 @font-face{font-family:'Mono';src:url(fonts/jetbrains-mono-latin-400-normal.woff2) format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'Mono';src:url(fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2');font-weight:500;font-display:swap}
 
 :root{
-  --bg:#0A0A0A;--s1:#121212;--s2:#1A1A1A;--s3:#242424;--line:#2A2A2A;
-  --ink:#F2F2F2;--ink2:#C4C4C4;--mute:#8A8A8A;--dim:#4A4A4A;
-  --sig:#D9865F;--sig-ink:#2A120A;
-  --paper:#FFFFFF;--paper2:#F4F4F4;--paper-ink:#0A0A0A;
-  --m:clamp(20px,3vw,40px);--col:clamp(0px,16vw,240px);
-  --t1:clamp(40px,5vw,80px);--t2:28px;--t3:18px;--t4:16px;--t5:16px;
-  --r:4px;--ui:'Plex',system-ui,sans-serif;--mono:'Mono',ui-monospace,monospace;
-  --ease-out:cubic-bezier(.23,1,.32,1);--ease-io:cubic-bezier(.77,0,.175,1);
+  --bg:#0A0A0A;--ink:#F2F2F2;--ink2:#C4C4C4;--mute:#8A8A8A;--sig:#D9865F;--sig-ink:#2A120A;
+  --m:clamp(20px,3vw,40px);
+  --ui:'Plex',system-ui,sans-serif;--mono:'Mono',ui-monospace,monospace;
+  --ease-out:cubic-bezier(.23,1,.32,1);
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--bg);color:var(--ink)}
-body{font-family:var(--ui);font-size:var(--t4);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto;font-family:var(--ui);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
-h1,h2,h3{margin:0;font-weight:600;letter-spacing:-0.02em;line-height:1.1}
-p{margin:0}
-button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 ::selection{background:var(--sig);color:var(--sig-ink)}
+@keyframes bl{50%{opacity:0}}
 
-
-
-/* teaser shell */
-body{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:22px var(--m)}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
 .mark{width:26px;height:26px;fill:var(--ink)}
@@ -35,31 +24,33 @@ body{min-height:100svh;display:grid;grid-template-rows:auto 1fr auto}
 .wordmark b{font-weight:500;color:var(--sig)}
 .tag{font-family:var(--mono);font-size:13px;color:var(--mute)}
 .tag b{font-weight:400;color:var(--sig)}
+
 main{position:relative;display:grid;grid-template-columns:auto auto;justify-content:center;align-items:center;gap:clamp(40px,7vw,140px);padding:24px var(--m) 64px;overflow:hidden}
 #field{position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;overflow:hidden;contain:strict;font-family:var(--mono);font-size:14px;line-height:2;letter-spacing:1em;color:#333;white-space:pre;user-select:none;pointer-events:none}
 #field b{font-weight:400;color:#6A6A6A}
 #field i{font-style:normal;color:var(--sig)}
+
 .copy{position:relative;z-index:1;max-width:620px}
 h1{margin:0;font-size:clamp(40px,5.2vw,76px);font-weight:600;letter-spacing:-0.035em;line-height:1.02;min-height:2.04em;max-width:11ch}
-h1 .cur{display:inline-block;width:.42em;height:.85em;background:var(--sig);vertical-align:-.06em;margin-left:.08em;animation:bl 1s steps(1) infinite}
-@keyframes bl{50%{opacity:0}}
+h1 .cur{display:inline-block;width:.42em;height:.85em;background:var(--sig);vertical-align:-.06em;margin-left:.08em}
+h1 .cur.idle{animation:bl 1s steps(1) infinite}
 .lead{margin:24px 0 0;font-size:17px;line-height:1.5;color:var(--ink2);max-width:34ch}
 .status{margin:40px 0 0;font-family:var(--mono);font-size:15px;color:var(--mute)}
-.status .c{display:inline-block;width:.5em;height:1em;background:var(--sig);vertical-align:-.15em;animation:bl 1s steps(1) infinite}
+.status .c{display:inline-block;width:.5em;height:1em;background:var(--sig);vertical-align:-.15em;margin-left:2px;animation:bl 1s steps(1) infinite}
+
 .stage{position:relative;z-index:1;width:clamp(200px,20vw,300px);aspect-ratio:1;margin-top:-1.2em}
 .tess{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.tess #teyes{transition:transform 220ms var(--ease-out);transform-box:fill-box;transform-origin:center}
-.tess #teyes.shut{transition:transform 60ms var(--ease-out)}
-.tess #teyes.wide{transition:transform 120ms var(--ease-out)}
-.mark #eyes{transition:transform 180ms var(--ease-out);transform-box:fill-box;transform-origin:center}
-.mark #eyes.shut{transition:transform 70ms var(--ease-out)}
-h1 .cur.idle{animation:bl 1s steps(1) infinite}h1 .cur{animation:none}
+#teyes,#eyes,#tbarg{transform-box:fill-box;transform-origin:center;transition:transform 220ms var(--ease-out)}
+#teyes.shut,#eyes.shut{transition:transform 60ms var(--ease-out)}
+#teyes.wide,#eyes.wide{transition:transform 120ms var(--ease-out)}
+
 .foot{display:flex;justify-content:space-between;padding:22px var(--m);font-family:var(--mono);font-size:13px;color:var(--mute)}
-@media (prefers-reduced-motion:reduce){.cur,.status .c{animation:none}.mark #eyes,.tess #teyes{transition:none}}
+
+@media (prefers-reduced-motion:reduce){h1 .cur.idle,.status .c{animation:none}#teyes,#eyes,#tbarg{transition:none}}
 @media (max-width:820px){
   .nav{padding:14px var(--m) 10px;gap:12px}
   .mark{width:22px;height:22px}
-  .wordmark{font-size:15px;white-space:nowrap}
+  .wordmark{font-size:15px}
   .tag{font-size:12px}.tag span{display:none}
   main{grid-template-columns:1fr;justify-content:stretch;gap:20px;padding:8px var(--m) 24px;align-items:start;align-content:center}
   .stage{order:-1;justify-self:start;width:96px;margin:0}
@@ -67,5 +58,5 @@ h1 .cur.idle{animation:bl 1s steps(1) infinite}h1 .cur{animation:none}
   .lead{margin-top:16px;font-size:16px}
   .status{margin-top:18px;font-size:14px}
   #field{font-size:11px;letter-spacing:.8em;line-height:1.8}
-  .foot{flex-direction:row;justify-content:space-between;padding:10px var(--m) 14px;font-size:12px}
+  .foot{padding:10px var(--m) 14px;font-size:12px}
 }
